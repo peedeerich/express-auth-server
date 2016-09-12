@@ -10,6 +10,12 @@ function tokenForUser(user) {
   }, config.secret);
 }
 
+exports.signin = function (req, res, next) {
+  // User has allready been auth'd
+  // Send token
+  res.json({ token: tokenForUser(req.user) });
+}
+
 exports.signup = function (req, res, next) {
   // see if user with give email exists
   const {email, password} = req.body;
