@@ -1,5 +1,13 @@
 const Authentication = require('./controllers/authentication');
+const passportService = require('./services/passport');
+const passport = require('passport');
 
-module.exports = function (app) {
+// Interceptor / Middleware
+const requireAuth = passport.authenticate('jwt', { session: false });
+
+module.exports = function(app) {
+  app.get('/', requireAuth, function(req, res) {
+    res.send({ message: 'Super secret code is ABC123' });
+  });
   app.post('/signup', Authentication.signup);
 }
